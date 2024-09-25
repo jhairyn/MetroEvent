@@ -1,5 +1,6 @@
 <?php
 // Include the database connection
+ob_start();
 include 'db.php';
 session_start();
 
@@ -29,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<div class='alert alert-danger'>User not found!</div>";
     }
 }
+ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html lang="en">

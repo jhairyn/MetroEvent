@@ -2,22 +2,38 @@
 // Include the database connection
 include 'db.php';
 
-// Handle form submission
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);  // Password hashing
-    $role = $_POST['role'];  // Capture the selected role
+     $role = $_POST['role'];  // Capture the selected role
 
-    // Insert user into database
-    $sql = "INSERT INTO users (name, email, password, role) VALUES ('$name', '$email', '$password', '$role')";
-    if ($conn->query($sql) === TRUE) {
-        echo "<div class='alert alert-success'>Registration successful!</div>";
-    } else {
-        echo "<div class='alert alert-danger'>Error: " . $sql . "<br>" . $conn->error . "</div>";
+
+    // Use prepared statement to prevent SQL injection
+    $stmt = $conn->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?,?)");
+    if ($stmt === false) {
+        die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
+
+    //$role = 'user';  // Set default role as 'user'
+    $stmt->bind_param("ssss", $name, $email, $password,$role);
+
+    if ($stmt->execute()) {
+        echo '<script>alert("Successfully Registered. Please Login."); window.location.href = "login.php";</script>';
+    } else {
+        echo "<div class='alert alert-danger'>Error: " . $stmt->error . "</div>";
+    }
+    $stmt->close();
 }
+
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>

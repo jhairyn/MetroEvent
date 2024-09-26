@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Display success alert and redirect using JavaScript
         echo "<script>
                 alert('Event created successfully!');
-                window.location.href = 'organiser_dashboard.php';
+                window.location.href = 'dashb.php';
               </script>";
         exit();  // Make sure to exit after outputting the JavaScript
     } else {

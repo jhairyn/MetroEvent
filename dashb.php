@@ -43,8 +43,24 @@
                                         <div class="p-10">
                                             <h2 class="fw-bolder">CREATE and MANAGE EVENTS, VIEW PARTICIPANTS.</h2>
 <?php
-    echo "Hello";
+session_start();
 
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+// Include database connection
+include 'db.php';
+
+// Fetch all events from the database
+$sql_events = "SELECT events.*, users.name AS organizer_name 
+                FROM events 
+                JOIN users ON events.organizer_id = users.id";
+$result_events = $conn->query($sql_events);
+
+echo $event['title'];
 ?>
 <?php
 ob_start();

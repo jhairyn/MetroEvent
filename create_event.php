@@ -25,8 +25,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param('ssssi', $title, $description, $date, $location, $organizer_id);
 
     if ($stmt->execute()) {
-        $alertMessage = "Event created successfully!";
-        $alertType = "success";
+        // Display success alert and redirect using JavaScript
+        echo "<script>
+                alert('Event created successfully!');
+                window.location.href = 'organiser_dashboard.php';
+              </script>";
+        exit();  // Make sure to exit after outputting the JavaScript
     } else {
         $alertMessage = "Error: " . $stmt->error;
         $alertType = "danger";
@@ -34,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

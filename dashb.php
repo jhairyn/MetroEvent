@@ -42,7 +42,9 @@
                                     <div class="d-flex align-items-center">
                                         <div class="p-10">
                                             <h2 class="fw-bolder">CREATE and MANAGE EVENTS, VIEW PARTICIPANTS.</h2>
+                                            
 <?php
+ob_start();
 session_start();
 
 // Check if user is logged in
@@ -179,6 +181,7 @@ if (isset($_SESSION['message'])) {
     unset($_SESSION['message']);
     echo '</div>';
 }
+    ob_end_flush();
 ?>
                                         
                                 </div>

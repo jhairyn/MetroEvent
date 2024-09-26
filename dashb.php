@@ -60,7 +60,7 @@ $sql_events = "SELECT events.*, users.name AS organizer_name
                 JOIN users ON events.organizer_id = users.id";
 $result_events = $conn->query($sql_events);
 
-echo $event['title'];
+echo $_SESSION['user_id'];
 ?>
 <?php
 ob_start();

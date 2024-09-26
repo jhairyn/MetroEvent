@@ -2,15 +2,25 @@
 include 'db.php';
 session_start();
 
-$alertMessage = '';
-$alertType = '';
-
-// Check if the user is logged in and if their role is 'organizer'
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'organizer') {
-    echo "<div class='alert alert-danger'>Access denied!</div>";
+// Debugging: Check if the session variables are set
+if (!isset($_SESSION['user_id'])) {
+    echo "<div class='alert alert-danger'>User is not logged in!</div>";
     exit;
 }
 
+// Debugging: Check if the role is set in the session
+if (!isset($_SESSION['role'])) {
+    echo "<div class='alert alert-danger'>User role is not defined in session!</div>";
+    exit;
+}
+
+// Check if the logged-in user's role is 'organizer'
+if ($_SESSION['role'] != 'organizer') {
+    echo "<div class='alert alert-danger'>Access denied! You are not an organizer.</div>";
+    exit;
+}
+
+// Handle event creation logic
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST['title'];
     $description = $_POST['description'];
@@ -32,12 +42,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </script>";
         exit();  // Make sure to exit after outputting the JavaScript
     } else {
-        $alertMessage = "Error: " . $stmt->error;
-        $alertType = "danger";
+        echo "<div class='alert alert-danger'>Error: " . $stmt->error . "</div>";
     }
     $stmt->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

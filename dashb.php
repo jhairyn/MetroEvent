@@ -62,6 +62,8 @@ $sql_events = "SELECT events.*, users.name AS organizer_name
                 JOIN users ON events.organizer_id = users.id";
 $result_events = $conn->query($sql_events);
 
+echo $event['title'];
+
 // Include Bootstrap CSS for styling
 echo '<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">';
 echo $_SESSION['role'];

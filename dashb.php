@@ -41,8 +41,8 @@
                                 <div class="card-body p-0">
                                     <div class="d-flex align-items-center">
                                         <div class="p-10">
-                                            <h2 class="fw-bolder">CREATE and MANAGE EVENTS, VIEW PARTICIPANTS.</h2>
-                                            asasddadad
+                                            <h2 class="fw-bolder">CREATE and MANAGE EVENTS, VIEW PARTICIPANTS.asddadasdadasd</h2>
+                                           
 <?php
 ob_start();
 session_start();

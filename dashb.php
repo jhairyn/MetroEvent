@@ -64,7 +64,7 @@ $result_events = $conn->query($sql_events);
 
 // Include Bootstrap CSS for styling
 echo '<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">';
-
+echo $_SESSION['role'];
 echo '<style>
         .container {
             margin-top: 20px;

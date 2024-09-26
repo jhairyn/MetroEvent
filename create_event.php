@@ -5,7 +5,8 @@ session_start();
 $alertMessage = '';
 $alertType = '';
 
-if ($_SESSION['role'] != 'organizer') {
+// Check if the user is logged in and if their role is 'organizer'
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'organizer') {
     echo "<div class='alert alert-danger'>Access denied!</div>";
     exit;
 }
@@ -17,17 +18,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $location = $_POST['location'];
     $organizer_id = $_SESSION['user_id'];
 
-    // Insert event into the database
+    // Insert event into the database using prepared statements
     $sql = "INSERT INTO events (title, description, date, location, organizer_id)
-            VALUES ('$title', '$description', '$date', '$location', '$organizer_id')";
-    
-    if ($conn->query($sql) === TRUE) {
+            VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ssssi', $title, $description, $date, $location, $organizer_id);
+
+    if ($stmt->execute()) {
         $alertMessage = "Event created successfully!";
         $alertType = "success";
     } else {
-        $alertMessage = "Error: " . $conn->error;
+        $alertMessage = "Error: " . $stmt->error;
         $alertType = "danger";
     }
+    $stmt->close();
 }
 ?>
 <!DOCTYPE html>
